@@ -13,6 +13,7 @@
 } from 'axios';
 
 import * as crypto from "crypto";
+import { GlobalString } from '../globals';
 
 class CoinBaseProService {
 
@@ -40,10 +41,10 @@ class CoinBaseProService {
     public GetRequestHeaders(forPath : string , body : any , method : string): AxiosRequestConfig {
         return {
             headers: {
-                'CB-ACCESS-KEY': '6026e788a195c479ab18e356771fef62',
+                'CB-ACCESS-KEY': GlobalString.CBACCESSKEY,
                 'CB-ACCESS-SIGN': this.GenerateAccesSign(forPath , body , method),
                 'CB-ACCESS-TIMESTAMP': Date.now() / 1000,
-                'CB-ACCESS-PASSPHRASE': 'zd1gvet2cfs',
+                'CB-ACCESS-PASSPHRASE': GlobalString.CBACCESSPASSPHRASE,
                 'Content-Type': 'application/json'
             }            
         };
@@ -54,8 +55,8 @@ class CoinBaseProService {
      * @param forPath path of the request
      * @param body body of the request
      */
-    private GenerateAccesSign(forPath: string , body : any , method : string): string {
-        let secret = 'SAMjLmp0oXPuwWtXlIv1XrBAR/enk2OOLZfAW6tLIsfrWaAnd+kU/LlgKkPY86xdZaD4TI4sShE8Dh9uZJhHAQ==';
+    private GenerateAccesSign(forPath: string, body: any, method: string): string {
+        let secret = GlobalString.CBSECRET;
             let timestamp = Date.now() / 1000;
             let requestPath = forPath;
             // create the prehash string by concatenating required parts

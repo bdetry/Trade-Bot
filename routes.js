@@ -1,9 +1,9 @@
-﻿//import { GenerateClass } from "./metier/GenerateClass";
-
-function routes(app: any) {
-    /*
-    const controller = new Controller(new GenerateClass());
-    app.route("/generate").get(controller.generate);
-    */
+"use strict";
+const TradeController = require("./Controllers/TradeController");
+//Routing table
+function routes(app) {
+    const tradeController = new TradeController();
+    app.route("/trade").get(tradeController.doTrade);
 }
-export = routes;
+module.exports = routes;
+//# sourceMappingURL=routes.js.map

@@ -1,6 +1,7 @@
 "use strict";
 const axios_1 = require("axios");
 const crypto = require("crypto");
+const globals_1 = require("../globals");
 class CoinBaseProService {
     /**
      * Send request to
@@ -21,10 +22,10 @@ class CoinBaseProService {
     GetRequestHeaders(forPath, body, method) {
         return {
             headers: {
-                'CB-ACCESS-KEY': '6026e788a195c479ab18e356771fef62',
+                'CB-ACCESS-KEY': globals_1.GlobalString.CBACCESSKEY,
                 'CB-ACCESS-SIGN': this.GenerateAccesSign(forPath, body, method),
                 'CB-ACCESS-TIMESTAMP': Date.now() / 1000,
-                'CB-ACCESS-PASSPHRASE': 'zd1gvet2cfs',
+                'CB-ACCESS-PASSPHRASE': globals_1.GlobalString.CBACCESSPASSPHRASE,
                 'Content-Type': 'application/json'
             }
         };
@@ -35,7 +36,7 @@ class CoinBaseProService {
      * @param body body of the request
      */
     GenerateAccesSign(forPath, body, method) {
-        let secret = 'SAMjLmp0oXPuwWtXlIv1XrBAR/enk2OOLZfAW6tLIsfrWaAnd+kU/LlgKkPY86xdZaD4TI4sShE8Dh9uZJhHAQ==';
+        let secret = globals_1.GlobalString.CBSECRET;
         let timestamp = Date.now() / 1000;
         let requestPath = forPath;
         // create the prehash string by concatenating required parts
