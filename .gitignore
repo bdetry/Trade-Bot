@@ -10,13 +10,6 @@
 *.userosscache
 *.sln.docstates
 
-
-./**/*.js
-/**/*.js
-*.js
-*.js.map
-/**/*.js.map
-
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
