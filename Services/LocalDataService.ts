@@ -7,7 +7,24 @@ import { CoinBaseAccount } from '../Models/CoinBaseAccount';
 /**
  * Main service data saving
  * */
-class DataSaverService {
+class LocalDataService {
+
+    /**
+     * Get last currency infomation
+     * @param currencyInfo
+     */
+    public GetLastCurrencyInfo(): mongoose.DocumentQuery<CoinBaseCurrency[], CoinBaseCurrency, {}> {
+        const Currency = mongoose.model<CoinBaseCurrency>('CoinBaseCurrency', CoinBaseCurrencySchema);
+        return Currency.find().sort({ date: -1 }).limit(1);
+    }
+
+    /**
+     * Get last acounts information
+     * */
+    public GetLastAccountsInfo(): mongoose.DocumentQuery<CoinBaseAccount[], CoinBaseAccount, {}> {
+        const Account = mongoose.model<CoinBaseAccount>('CoinBaseAccount', CoinBaseAccountSchema);
+        return Account.find().sort({ date: -1 }).limit(2);
+    }
 
     /**
      * Save currency infomation
@@ -29,4 +46,4 @@ class DataSaverService {
 
 }
 
-export = DataSaverService
+export = LocalDataService

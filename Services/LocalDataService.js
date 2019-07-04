@@ -5,13 +5,21 @@ const mongoose = require("mongoose");
 /**
  * Main service data saving
  * */
-class DataSaverService {
+class LocalDataService {
     /**
-     * Get last saved price
-     * */
-    GetLastPrice() {
+     * Get last currency infomation
+     * @param currencyInfo
+     */
+    GetLastCurrencyInfo() {
         const Currency = mongoose.model('CoinBaseCurrency', CoinBaseCurrencySchema_1.CoinBaseCurrencySchema);
-        Currency.find().sort({ date: 1 });
+        return Currency.find().sort({ date: -1 }).limit(1);
+    }
+    /**
+     * Get last acounts information
+     * */
+    GetLastAccountsInfo() {
+        const Account = mongoose.model('CoinBaseAccount', CoinBaseAccountSchema_1.CoinBaseAccountSchema);
+        return Account.find().sort({ date: -1 }).limit(2);
     }
     /**
      * Save currency infomation
@@ -30,5 +38,5 @@ class DataSaverService {
         return new Account(account).save();
     }
 }
-module.exports = DataSaverService;
-//# sourceMappingURL=DataSaverService.js.map
+module.exports = LocalDataService;
+//# sourceMappingURL=LocalDataService.js.map

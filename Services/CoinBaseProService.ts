@@ -14,21 +14,26 @@
 
 import * as crypto from "crypto";
 import { GlobalString } from '../globals';
+import { CoinBaseOrder } from '../Models/CoinBaseOrder';
 
 class CoinBaseProService {
-
-    private crytoCode: string;
-
     /**
      * Send request to 
      * @param forPath
      * @param config
      * @param method
      */
-    public Request(forPath: string, config: AxiosRequestConfig , method : string): AxiosPromise<object> {
+    public Request(forPath: string, config: AxiosRequestConfig, method: string, body: CoinBaseOrder = undefined): AxiosPromise<object> {
 
         config.url = "https://api.pro.coinbase.com" + forPath;
         config.method = method as Method;
+
+        
+        if (method == "POST" &&
+            body != undefined) {
+            config.data = body
+        }
+        
 
         return axios.request(config);
     }
@@ -46,7 +51,7 @@ class CoinBaseProService {
                 'CB-ACCESS-TIMESTAMP': Date.now() / 1000,
                 'CB-ACCESS-PASSPHRASE': GlobalString.CBACCESSPASSPHRASE,
                 'Content-Type': 'application/json'
-            }            
+            }
         };
     }
 

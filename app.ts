@@ -36,7 +36,7 @@ app.listen(port, () => {
 
     try {
         //First price pulls
-        dataGetter.GetCurrencyPrice('BTC-EUR').then(res => {
+        dataGetter.GetCurrencyPrice('LTC-EUR').then(res => {
             let currency = res.data as CoinBaseCurrency;
             //Save data localy      
             dataSaver.SaveCurrency(currency)

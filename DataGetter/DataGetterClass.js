@@ -1,17 +1,31 @@
 "use strict";
 const CoinBaseProService = require("./../Services/CoinBaseProService");
+const LocalDataService = require("../Services/LocalDataService");
 /**
  * Class that gets metadatas
  * */
 class DataGetterClass {
     constructor() {
         this.service = new CoinBaseProService();
+        this.localStorage = new LocalDataService();
+    }
+    /**
+     * Get last store price
+     * */
+    GetLocalPrice() {
+        return this.localStorage.GetLastCurrencyInfo();
+    }
+    /**
+     * Get last stored accounts
+     * */
+    GetLocalAccounts() {
+        return this.localStorage.GetLastAccountsInfo();
     }
     /**
      * Send get request to coinbase pro
      * @param forPath route of request
      */
-    Get(forPath) {
+    GetFromCoinBase(forPath) {
         let method = "GET";
         let body = '';
         let header = this.service.GetRequestHeaders(forPath, body, method);
@@ -22,21 +36,21 @@ class DataGetterClass {
      * @param keyPair examle 'BTC-USD'
      */
     GetCurrencyPrice(keyPair) {
-        return this.Get('/products/' + keyPair + '/book');
+        return this.GetFromCoinBase('/products/' + keyPair + '/book');
     }
     /**
      * Get coinbase account
      * @param accountID id
      */
     GetAccount(accountID) {
-        return this.Get('/accounts/' + accountID);
+        return this.GetFromCoinBase('/accounts/' + accountID);
     }
     /**
      * Get coinbase accounts
      * @param accountID id
      */
     GetAccounts() {
-        return this.Get('/accounts');
+        return this.GetFromCoinBase('/accounts');
     }
 }
 module.exports = DataGetterClass;
