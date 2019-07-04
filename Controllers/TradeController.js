@@ -47,16 +47,10 @@ class TradeController {
                         let currentPrice = x.data.asks[0][0];
                         //Choise maker
                         let strategies = new StrategiesClass(+lastSavedPrice, +currentPrice, +moneyZeroAccount.available, +moneyOneAccount.available);
-                        //Apply start
                         strategies.ApplyStrategieAndCreateOrder("strat1");
-                        //Buy / Sell
                         return this.dataSaver.PlaceOrder(strategies.orders[0])
                             .then(ordered => {
-                            //Order placed 
                             console.log(ordered);
-                            //TODO
-                            // Log result 
-                            // Save db
                         }).catch(e => {
                             throw new Error(e);
                         });
