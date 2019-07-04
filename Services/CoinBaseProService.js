@@ -9,13 +9,9 @@ class CoinBaseProService {
      * @param config
      * @param method
      */
-    Request(forPath, config, method, body = undefined) {
+    Request(forPath, config, method) {
         config.url = "https://api.pro.coinbase.com" + forPath;
         config.method = method;
-        if (method == "POST" &&
-            body != undefined) {
-            config.data = body;
-        }
         return axios_1.default.request(config);
     }
     /**

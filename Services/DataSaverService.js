@@ -7,13 +7,6 @@ const mongoose = require("mongoose");
  * */
 class DataSaverService {
     /**
-     * Get last saved price
-     * */
-    GetLastPrice() {
-        const Currency = mongoose.model('CoinBaseCurrency', CoinBaseCurrencySchema_1.CoinBaseCurrencySchema);
-        Currency.find().sort({ date: 1 });
-    }
-    /**
      * Save currency infomation
      * @param currencyInfo
      */

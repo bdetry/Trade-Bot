@@ -48,15 +48,12 @@
     <TypeScriptCompile Include="Models\CoinBaseCurrency.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
-    <TypeScriptCompile Include="Models\CoinBaseOrder.ts">
-      <SubType>Code</SubType>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="Models\CoinBaseTime.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Models\Schemas\CoinBaseAccountSchema.ts" />
     <TypeScriptCompile Include="Models\Schemas\CoinBaseCurrencySchema.ts" />
-    <TypeScriptCompile Include="Services\LocalDataService.ts">
+    <TypeScriptCompile Include="Services\DataSaverService.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>
@@ -66,7 +63,6 @@
     <Folder Include="DataSaver\" />
     <Folder Include="Models\Schemas\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Strategies\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +73,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="routes.ts">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Strategies\StrategiesClass.ts">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
