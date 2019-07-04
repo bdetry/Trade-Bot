@@ -1,21 +1,11 @@
 "use strict";
-const DataSaverService = require("../Services/LocalDataService");
-const CoinBaseProService = require("../Services/CoinBaseProService");
+const DataSaverService = require("../Services/DataSaverService");
 /**
  * Class build to save data
  * */
 class DataSaverClass {
     constructor() {
         this.saverService = new DataSaverService();
-        this.coinBaseProService = new CoinBaseProService();
-    }
-    /**
-     * Place a purchase/sell order to coinbasepro
-     * @param order
-     */
-    PlaceOrder(order) {
-        let header = this.coinBaseProService.GetRequestHeaders("/orders", JSON.stringify(order), "POST");
-        return this.coinBaseProService.Request("/orders", header, "POST", order);
     }
     /**
      * Save currency info to db
