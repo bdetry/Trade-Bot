@@ -77,7 +77,7 @@ class StrategiesClass {
 
         }
 
-        throw new Error("Could not apply start and pre make order")
+        throw new Error("Could not apply strategie and pre make order")
 
     }
 

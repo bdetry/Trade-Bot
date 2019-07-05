@@ -1,10 +1,13 @@
 ﻿import { GoogleSheetsCred } from "../Models/GoogleSheetsCred";
 import * as fs from 'fs';
-import { google } from 'googleapis'; 
+import { google, sheets_v4 } from 'googleapis'; 
 import * as readline from 'readline';
 import { content } from "googleapis/build/src/apis/content";
 import * as creds from './../credentials.json';
 import * as token from './../token.json';
+import { GlobalString } from "../globals";
+import { GaxiosResponse } from "gaxios";
+import { TradeLog } from "../Models/TradeLog";
 
 class SpreadsheetService {
 
@@ -12,18 +15,33 @@ class SpreadsheetService {
 
     private creds: GoogleSheetsCred; 
     sheet: any;
+    sheetId: string
 
     private auth: any;
 
-    constructor() {
+    public sheetValues: any[][];
 
+    constructor(id: string) {
+        this.sheetId = id
     }
 
     /**
      * Get acces tokens
      * */
-    Init() {
-        this.Authorize(creds, console.log)
+    Init(): Promise<any[][]>   {
+
+        return new Promise((resolve, reject) => {
+            this.Authorize(creds, (oAuth2Client, sheetId) => {
+
+                this.GetSpreadSheet(oAuth2Client, sheetId)
+                    .then(x => {
+                        this.sheetValues = x.data.values;
+                        resolve(x.data.values)
+                    })
+                    .catch(err => reject( new Error("Could not fetch spreadsheet :" + err)))
+
+            })
+        })       
     }
 
     //Google auth setter
@@ -31,19 +49,27 @@ class SpreadsheetService {
         this.auth = auth
     }
 
-
-    public GetSpreadSheet(string: string ) {
-        const sheets = google.sheets({ version: 'v4', auth });
-        sheets.spreadsheets.values.get({
-            spreadsheetId: string,
+    /**
+     * Get the main spreadsheet
+     * @param oAuth2Client
+     * @param sheetId
+     */
+    public GetSpreadSheet(oAuth2Client , sheetId) {
+        const sheets = google.sheets({ version: 'v4', auth: oAuth2Client }); 
+        return sheets.spreadsheets.values.get({
+            spreadsheetId: sheetId,
             range: 'Sheet1!A:Z',
-        }, (err, res) => {
-            if (err) return console.log('The API returned an error: ' + err);
-            const rows = res.data.values;
-
-
-                console.log()
         });
+    }
+
+    /**
+     * Write to spreadsheet
+     * @param rows
+     * @param trade
+     */
+    public Write(rows: any[][], trade: TradeLog) {
+        console.log(rows);
+        console.log(trade);
     }
 
     /**
@@ -52,7 +78,7 @@ class SpreadsheetService {
      * @param {Object} credentials The authorization client credentials.
      * @param {function} callback The callback to call with the authorized client.
      */
-    Authorize(credentials: GoogleSheetsCred, callback) {
+    Authorize(credentials: GoogleSheetsCred , callback) {
  
 
         let client_secret = credentials.installed.client_secret as string;
@@ -67,7 +93,7 @@ class SpreadsheetService {
         fs.readFile('./token.json', (err, t) => {
             if (err) return this.GetNewToken(oAuth2Client, callback);
             oAuth2Client.setCredentials(token);
-            callback(oAuth2Client);
+            callback(oAuth2Client, this.sheetId);
         });
     }
 

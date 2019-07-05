@@ -49,23 +49,38 @@ class TradeController {
                         let strategies = new StrategiesClass(+lastSavedPrice, +currentPrice, +moneyZeroAccount.available, +moneyOneAccount.available);
                         //Apply start
                         strategies.ApplyStrategieAndCreateOrder("strat1");
-                        try {
-                            this.dataSaver.LogActionData();
-                        }
-                        catch (e) {
-                            console.log(e);
-                        }
+                        let log = {
+                            date: Date.now.toString(),
+                            id: "string",
+                            price: 25165,
+                            size: 25165,
+                            sizeConvertedMoneyTwo: 25165,
+                            side: "string",
+                            moneyOneBalance: 25165,
+                            moneyTwoBalance: 25165,
+                            moneyOneBalanceCoverted: 25165,
+                            totalBlances: 25165
+                        };
+                        this.dataSaver.LogActionData(log);
                         //Buy / Sell
+                        /*
                         return this.dataSaver.PlaceOrder(strategies.orders[0])
                             .then(ordered => {
-                            //Order placed 
-                            console.log(ordered);
-                            //TODO
-                            // Log result 
-                            // Save db
-                        }).catch(e => {
-                            throw new Error(e);
-                        });
+
+                                //Order placed
+                                console.log(ordered);
+
+                                
+
+                                //TODO
+
+                                // Log result
+                                // Save db
+
+                            }).catch(e => {
+                                throw new Error(e);
+                            })
+                        */
                     }).catch(e => {
                         throw new Error(e);
                     });

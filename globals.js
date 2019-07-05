@@ -11,5 +11,6 @@ var GlobalString;
     GlobalString["MONEYTWOKEY"] = "LTC";
     GlobalString["MONEYSPAISKEY"] = "LTC-EUR";
     GlobalString["TRADESECURITYKEY"] = "2s58e2fa2e582a2";
+    GlobalString["SPREADSHEETID"] = "1NnBQ-OpYjPTeOuTuXZhgLko8uSafuWqeCIHbblDTuWk";
 })(GlobalString = exports.GlobalString || (exports.GlobalString = {}));
 //# sourceMappingURL=globals.js.map

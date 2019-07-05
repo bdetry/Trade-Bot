@@ -5,6 +5,7 @@ import { CoinBaseCurrency } from '../Models/CoinBaseCurrency';
 import StrategiesClass = require('./../Strategies/StrategiesClass');
 import { CoinBaseAccount } from '../Models/CoinBaseAccount';
 import DataSaverClass = require('../DataSaver/DataSaverClass');
+import { TradeLog } from '../Models/TradeLog';
 /**
  * Class that trade cryptos
  * */
@@ -70,16 +71,28 @@ class TradeController {
                                         //Apply start
                                         strategies.ApplyStrategieAndCreateOrder("strat1")
 
-                                        try {
-                                            this.dataSaver.LogActionData();
-                                            this.dataGetter.GetSpreadSheet();
-                                        } catch (e) {
-                                            console.log(e)
-                                        }
+
+                                        let log: TradeLog = {
+                                            date: Date.now.toString(),
+                                            id: "string",
+                                            price: 25165,
+                                            size: 25165,
+                                            sizeConvertedMoneyTwo: 25165,
+                                            side: "string",
+                                            moneyOneBalance: 25165,
+                                            moneyTwoPrice : 563,
+                                            moneyTwoBalance: 25165,
+                                            moneyOneBalanceCoverted: 25165,
+                                            totalBlances: 25165
+                                        };
+
+                                            this.dataSaver.LogActionData(log);
 
                                         
 
                                         //Buy / Sell
+
+                                        /*
                                         return this.dataSaver.PlaceOrder(strategies.orders[0])
                                             .then(ordered => {
 
@@ -95,7 +108,8 @@ class TradeController {
 
                                             }).catch(e => {
                                                 throw new Error(e);
-                                            })                                            
+                                            })  
+                                        */
                                     }).catch(e => {
                                         throw new Error(e);
                                     })

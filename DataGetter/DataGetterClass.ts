@@ -6,6 +6,7 @@ import { CoinBaseAccountSchema } from "../Models/Schemas/CoinBaseAccountSchema";
 import * as mongoose from 'mongoose'
 import LocalDataService = require("../Services/LocalDataService");
 import SpreadsheetService = require("../Services/SpreadsheetService");
+import { GlobalString } from "../globals";
 
 /**
  * Class that gets metadatas
@@ -15,19 +16,12 @@ class DataGetterClass {
     
     private service: CoinBaseProService;
     private localStorage: LocalDataService;
-    private spreadSheetService: SpreadsheetService;
 
     constructor() {
         this.service = new CoinBaseProService();
         this.localStorage = new LocalDataService();
-        this.spreadSheetService = new SpreadsheetService();
     }
-
-
-    public GetSpreadSheet(): any {
-        this.spreadSheetService.GetSpreadSheet();
-    }
-
+    
     /**
      * Get last store price
      * */

@@ -5,18 +5,49 @@ const readline = require("readline");
 const creds = require("./../credentials.json");
 const token = require("./../token.json");
 class SpreadsheetService {
-    constructor() {
-        this.SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
+    constructor(id) {
+        this.SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
+        this.sheetId = id;
     }
     /**
      * Get acces tokens
      * */
     Init() {
-        this.Authorize(creds, console.log);
+        return new Promise((resolve, reject) => {
+            this.Authorize(creds, (oAuth2Client, sheetId) => {
+                this.GetSpreadSheet(oAuth2Client, sheetId)
+                    .then(x => {
+                    this.sheetValues = x.data.values;
+                    resolve(x.data.values);
+                })
+                    .catch(err => reject(new Error("Could not fetch spreadsheet :" + err)));
+            });
+        });
     }
     //Google auth setter
     SetAuth(auth) {
         this.auth = auth;
+    }
+    /**
+     * Get the main spreadsheet
+     * @param oAuth2Client
+     * @param sheetId
+     */
+    GetSpreadSheet(oAuth2Client, sheetId) {
+        const sheets = googleapis_1.google.sheets({ version: 'v4', auth: oAuth2Client });
+        return sheets.spreadsheets.values.get({
+            spreadsheetId: sheetId,
+            range: 'Sheet1!A:Z',
+        });
+    }
+    /**
+     * Write to spreadsheet
+     * @param rows
+     * @param trade
+     */
+    Write(rows, trade) {
+        console.log(rows);
+        console.log(trade);
     }
     /**
      * Create an OAuth2 client with the given credentials, and then execute the
@@ -34,7 +65,7 @@ class SpreadsheetService {
             if (err)
                 return this.GetNewToken(oAuth2Client, callback);
             oAuth2Client.setCredentials(token);
-            callback(oAuth2Client);
+            callback(oAuth2Client, this.sheetId);
         });
     }
     /**

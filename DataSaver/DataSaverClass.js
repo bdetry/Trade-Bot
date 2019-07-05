@@ -2,6 +2,7 @@
 const LocalDataService = require("../Services/LocalDataService");
 const CoinBaseProService = require("../Services/CoinBaseProService");
 const SpreadsheetService = require("../Services/SpreadsheetService");
+const globals_1 = require("../globals");
 /**
  * Class build to save data
  * */
@@ -9,13 +10,15 @@ class DataSaverClass {
     constructor() {
         this.saverService = new LocalDataService();
         this.coinBaseProService = new CoinBaseProService();
-        this.spreadsheetService = new SpreadsheetService();
+        this.spreadsheetService = new SpreadsheetService(globals_1.GlobalString.SPREADSHEETID);
     }
     /**
      * Log data on spread sheet
      * */
-    LogActionData() {
-        this.spreadsheetService.Init();
+    LogActionData(trade) {
+        this.spreadsheetService.Init().then(x => {
+            this.spreadsheetService.Write(x, trade);
+        }).catch(e => console.log(e));
     }
     /**
      * Place a purchase/sell order to coinbasepro

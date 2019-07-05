@@ -10,5 +10,7 @@ export enum GlobalString {
     MONEYSPAISKEY = "LTC-EUR",
 
 
-    TRADESECURITYKEY = '2s58e2fa2e582a2' 
+    TRADESECURITYKEY = '2s58e2fa2e582a2',
+
+    SPREADSHEETID = "1NnBQ-OpYjPTeOuTuXZhgLko8uSafuWqeCIHbblDTuWk"
 }

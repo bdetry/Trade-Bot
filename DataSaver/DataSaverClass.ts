@@ -5,6 +5,8 @@ import { CoinBaseOrder } from "../Models/CoinBaseOrder";
 import CoinBaseProService = require("../Services/CoinBaseProService");
 import SpreadsheetService = require("../Services/SpreadsheetService");
 import { GoogleSheetsCred } from "../Models/GoogleSheetsCred";
+import { GlobalString } from "../globals";
+import { TradeLog } from "../Models/TradeLog";
 
 /**
  * Class build to save data
@@ -19,14 +21,18 @@ class DataSaverClass {
     constructor() {
         this.saverService = new LocalDataService();
         this.coinBaseProService = new CoinBaseProService();
-        this.spreadsheetService = new SpreadsheetService();
+        this.spreadsheetService = new SpreadsheetService(GlobalString.SPREADSHEETID);
     }
 
     /**
      * Log data on spread sheet
      * */
-    public LogActionData() {
-            this.spreadsheetService.Init();
+    public LogActionData(trade: TradeLog) {
+        this.spreadsheetService.Init().then(x => {
+
+            this.spreadsheetService.Write(x, trade);
+
+        }).catch(e => console.log(e));
     }
 
     /**
