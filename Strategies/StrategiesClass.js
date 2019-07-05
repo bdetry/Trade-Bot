@@ -1,5 +1,6 @@
 "use strict";
 const mongoose_1 = require("mongoose");
+const globals_1 = require("../globals");
 /**
  * Class qui definit les actions a executer
  * */
@@ -27,7 +28,7 @@ class StrategiesClass {
                     size: toSellMoneyTwo.toString(),
                     price: this.currentMoneyTwoPrice.toString(),
                     side: "sell",
-                    product_id: "LTC-EUR"
+                    product_id: globals_1.GlobalString.MONEYSPAISKEY
                 });
                 return true;
             }
@@ -39,7 +40,7 @@ class StrategiesClass {
                     size: toBuyMoneyTwo.toString(),
                     price: this.currentMoneyTwoPrice.toString(),
                     side: "buy",
-                    product_id: "LTC-EUR"
+                    product_id: globals_1.GlobalString.MONEYSPAISKEY
                 });
                 return true;
             }

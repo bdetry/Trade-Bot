@@ -11,13 +11,11 @@ class DataSaverClass {
         this.coinBaseProService = new CoinBaseProService();
         this.spreadsheetService = new SpreadsheetService();
     }
+    /**
+     * Log data on spread sheet
+     * */
     LogActionData() {
-        try {
-            this.spreadsheetService.Init();
-        }
-        catch (e) {
-            console.log(e);
-        }
+        this.spreadsheetService.Init();
     }
     /**
      * Place a purchase/sell order to coinbasepro

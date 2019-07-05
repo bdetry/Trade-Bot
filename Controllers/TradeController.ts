@@ -51,16 +51,16 @@ class TradeController {
                                 let moneyOneAccount: CoinBaseAccount;
 
 
-                                if (r[0].currency == "EUR") {
+                                if (r[0].currency == GlobalString.MONEYONEKEY) {
                                     moneyZeroAccount = r[0];
                                     moneyOneAccount = r[1];
-                                } else if (r[0].currency == "LTC") {
+                                } else if (r[0].currency == GlobalString.MONEYTWOKEY) {
                                     moneyZeroAccount = r[1];
                                     moneyOneAccount = r[0];
                                 }
 
                                 //Get currrent price
-                                 return this.dataGetter.GetCurrencyPrice("LTC-EUR")
+                                return this.dataGetter.GetCurrencyPrice(GlobalString.MONEYSPAISKEY)
                                     .then(x => {
                                         //current price
                                         let currentPrice = x.data.asks[0][0];
@@ -70,7 +70,14 @@ class TradeController {
                                         //Apply start
                                         strategies.ApplyStrategieAndCreateOrder("strat1")
 
-                                        this.dataSaver.LogActionData();
+                                        try {
+                                            this.dataSaver.LogActionData();
+                                            this.dataGetter.GetSpreadSheet();
+                                        } catch (e) {
+                                            console.log(e)
+                                        }
+
+                                        
 
                                         //Buy / Sell
                                         return this.dataSaver.PlaceOrder(strategies.orders[0])

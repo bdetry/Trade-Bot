@@ -1,5 +1,6 @@
 ﻿import { CoinBaseOrder } from "../Models/CoinBaseOrder";
 import { Error } from "mongoose";
+import { GlobalString } from "../globals";
 
 /**
  * Class qui definit les actions a executer 
@@ -50,7 +51,7 @@ class StrategiesClass {
                         size: toSellMoneyTwo.toString(),
                         price: this.currentMoneyTwoPrice.toString(),
                         side: "sell",
-                        product_id: "LTC-EUR"
+                        product_id: GlobalString.MONEYSPAISKEY
                     });
 
 
@@ -67,7 +68,7 @@ class StrategiesClass {
                         size: toBuyMoneyTwo.toString(),
                         price: this.currentMoneyTwoPrice.toString(),
                         side: "buy",
-                        product_id: "LTC-EUR"
+                        product_id: GlobalString.MONEYSPAISKEY
                     });
 
                 return true;

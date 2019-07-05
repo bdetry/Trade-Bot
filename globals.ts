@@ -5,5 +5,10 @@ export enum GlobalString {
     CBLTCACCOINTID = '1e3ac191-3f8d-4848-8737-cad3835dcb8f',
     CBEURACCOUNTID = '907432c9-8a3b-4d6f-a4b9-c667511aee7d',
 
+    MONEYONEKEY = "EUR",
+    MONEYTWOKEY = "LTC",
+    MONEYSPAISKEY = "LTC-EUR",
+
+
     TRADESECURITYKEY = '2s58e2fa2e582a2' 
 }

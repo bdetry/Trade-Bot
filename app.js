@@ -25,10 +25,10 @@ app.listen(port, () => {
     let dataSaver = new DataSaverClass();
     try {
         //First price pulls
-        dataGetter.GetCurrencyPrice('LTC-EUR').then(res => {
+        dataGetter.GetCurrencyPrice(globals_1.GlobalString.MONEYSPAISKEY).then(res => {
             let currency = res.data;
             //Save data localy      
-            dataSaver.SaveCurrency(currency)
+            return dataSaver.SaveCurrency(currency)
                 .then(res => console.log("Currency info saved to database"))
                 .catch(err => { throw new Error(err); });
         }).catch(err => { throw new Error("Getting currency price"); });
@@ -36,7 +36,7 @@ app.listen(port, () => {
         dataGetter.GetAccount(globals_1.GlobalString.CBLTCACCOINTID).then(res => {
             let account = res.data;
             //Save data localy
-            dataSaver.SaveAccount(account)
+            return dataSaver.SaveAccount(account)
                 .then(res => console.log("Account info saved to database"))
                 .catch(err => { throw new Error(err); });
         }).catch(err => { throw new Error(err); });
@@ -44,7 +44,7 @@ app.listen(port, () => {
         dataGetter.GetAccount(globals_1.GlobalString.CBEURACCOUNTID).then(res => {
             let account = res.data;
             //Save data localy
-            dataSaver.SaveAccount(account)
+            return dataSaver.SaveAccount(account)
                 .then(res => console.log("Account info saved to database"))
                 .catch(err => { throw new Error(err); });
         }).catch(err => { throw new Error(err); });

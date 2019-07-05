@@ -22,12 +22,11 @@ class DataSaverClass {
         this.spreadsheetService = new SpreadsheetService();
     }
 
+    /**
+     * Log data on spread sheet
+     * */
     public LogActionData() {
-        try {
             this.spreadsheetService.Init();
-        } catch (e) {
-            console.log(e);
-        }
     }
 
     /**

@@ -1,41 +1,50 @@
 ﻿import { GoogleSheetsCred } from "../Models/GoogleSheetsCred";
 import * as fs from 'fs';
-import { google } from 'googleapis';
+import { google } from 'googleapis'; 
 import * as readline from 'readline';
 import { content } from "googleapis/build/src/apis/content";
+import * as creds from './../credentials.json';
+import * as token from './../token.json';
 
 class SpreadsheetService {
 
-    private SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']; 
+    private SCOPES = ['https://www.googleapis.com/auth/spreadsheets']; 
 
     private creds: GoogleSheetsCred; 
     sheet: any;
+
+    private auth: any;
 
     constructor() {
 
     }
 
-
+    /**
+     * Get acces tokens
+     * */
     Init() {
-        // Load client secrets from a local file.
-        fs.readFile('./credentials.json', 'utf8' , (err, content) => {
-            if (err) throw err;;
-            // Authorize a client with credentials, then call the Google Sheets API.
+        this.Authorize(creds, console.log)
+    }
 
-            try {
-
-                let test = content.replace("\"" , '\'')
-
-                let json: GoogleSheetsCred = JSON.parse(content);
-
-                this.Authorize(json, console.log);
-            } catch (e) {
-                console.log(e);
-            }
-        });
+    //Google auth setter
+    public SetAuth(auth) {
+        this.auth = auth
     }
 
 
+    public GetSpreadSheet(string: string ) {
+        const sheets = google.sheets({ version: 'v4', auth });
+        sheets.spreadsheets.values.get({
+            spreadsheetId: string,
+            range: 'Sheet1!A:Z',
+        }, (err, res) => {
+            if (err) return console.log('The API returned an error: ' + err);
+            const rows = res.data.values;
+
+
+                console.log()
+        });
+    }
 
     /**
      * Create an OAuth2 client with the given credentials, and then execute the
@@ -55,22 +64,20 @@ class SpreadsheetService {
             client_id, client_secret, redirect_uris[0]);
 
         // Check if we have previously stored a token.
-        fs.readFile('./token.json', (err, token) => {
+        fs.readFile('./token.json', (err, t) => {
             if (err) return this.GetNewToken(oAuth2Client, callback);
-            oAuth2Client.setCredentials(JSON.parse(token.values.toString()));
+            oAuth2Client.setCredentials(token);
             callback(oAuth2Client);
         });
     }
 
 
-
-
-        /**
-        * Get and store new token after prompting for user authorization, and then
-        * execute the given callback with the authorized OAuth2 client.
-        * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
-        * @param {getEventsCallback} callback The callback for the authorized client.
-        */
+    /**
+    * Get and store new token after prompting for user authorization, and then
+    * execute the given callback with the authorized OAuth2 client.
+    * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
+    * @param {getEventsCallback} callback The callback for the authorized client.
+    */
     GetNewToken(oAuth2Client, callback) {
         const authUrl = oAuth2Client.generateAuthUrl({
             access_type: 'offline',

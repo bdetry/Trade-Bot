@@ -2,26 +2,21 @@
 const fs = require("fs");
 const googleapis_1 = require("googleapis");
 const readline = require("readline");
+const creds = require("./../credentials.json");
+const token = require("./../token.json");
 class SpreadsheetService {
     constructor() {
         this.SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
     }
+    /**
+     * Get acces tokens
+     * */
     Init() {
-        // Load client secrets from a local file.
-        fs.readFile('./credentials.json', 'utf8', (err, content) => {
-            if (err)
-                throw err;
-            ;
-            // Authorize a client with credentials, then call the Google Sheets API.
-            try {
-                let test = content.replace("\"", '\'');
-                let json = JSON.parse(content);
-                this.Authorize(json, console.log);
-            }
-            catch (e) {
-                console.log(e);
-            }
-        });
+        this.Authorize(creds, console.log);
+    }
+    //Google auth setter
+    SetAuth(auth) {
+        this.auth = auth;
     }
     /**
      * Create an OAuth2 client with the given credentials, and then execute the
@@ -35,10 +30,10 @@ class SpreadsheetService {
         let redirect_uris = credentials.installed.redirect_uris;
         const oAuth2Client = new googleapis_1.google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
         // Check if we have previously stored a token.
-        fs.readFile('./token.json', (err, token) => {
+        fs.readFile('./token.json', (err, t) => {
             if (err)
                 return this.GetNewToken(oAuth2Client, callback);
-            oAuth2Client.setCredentials(JSON.parse(token.values.toString()));
+            oAuth2Client.setCredentials(token);
             callback(oAuth2Client);
         });
     }

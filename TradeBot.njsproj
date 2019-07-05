@@ -37,6 +37,7 @@
     <Content Include="credentials.json">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="token.json" />
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
