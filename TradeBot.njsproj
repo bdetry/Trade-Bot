@@ -34,6 +34,9 @@
   </PropertyGroup>
   <ItemGroup>
     <TypeScriptCompile Include="app.ts" />
+    <Content Include="credentials.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
@@ -54,9 +57,15 @@
     <TypeScriptCompile Include="Models\CoinBaseTime.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Models\GoogleSheetsCred.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Models\Schemas\CoinBaseAccountSchema.ts" />
     <TypeScriptCompile Include="Models\Schemas\CoinBaseCurrencySchema.ts" />
     <TypeScriptCompile Include="Services\LocalDataService.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Services\SpreadsheetService.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>

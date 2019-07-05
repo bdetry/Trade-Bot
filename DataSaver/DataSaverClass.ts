@@ -1,21 +1,33 @@
-﻿import DataSaverService = require("../Services/LocalDataService");
+﻿import LocalDataService = require("../Services/LocalDataService");
 import { CoinBaseCurrency } from "../Models/CoinBaseCurrency";
 import { CoinBaseAccount } from "../Models/CoinBaseAccount";
 import { CoinBaseOrder } from "../Models/CoinBaseOrder";
 import CoinBaseProService = require("../Services/CoinBaseProService");
+import SpreadsheetService = require("../Services/SpreadsheetService");
+import { GoogleSheetsCred } from "../Models/GoogleSheetsCred";
 
 /**
  * Class build to save data
  * */
 class DataSaverClass {
 
-    private saverService: DataSaverService
+    private saverService: LocalDataService
     private coinBaseProService: CoinBaseProService
+    private spreadsheetService: SpreadsheetService
 
 
     constructor() {
-        this.saverService = new DataSaverService();
+        this.saverService = new LocalDataService();
         this.coinBaseProService = new CoinBaseProService();
+        this.spreadsheetService = new SpreadsheetService();
+    }
+
+    public LogActionData() {
+        try {
+            this.spreadsheetService.Init();
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     /**

@@ -3,7 +3,7 @@ const CoinBaseCurrencySchema_1 = require("../Models/Schemas/CoinBaseCurrencySche
 const CoinBaseAccountSchema_1 = require("../Models/Schemas/CoinBaseAccountSchema");
 const mongoose = require("mongoose");
 /**
- * Main service data saving
+ * Main service data
  * */
 class LocalDataService {
     /**

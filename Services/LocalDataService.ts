@@ -5,7 +5,7 @@ import * as mongoose from 'mongoose'
 import { CoinBaseAccount } from '../Models/CoinBaseAccount';
 
 /**
- * Main service data saving
+ * Main service data
  * */
 class LocalDataService {
 

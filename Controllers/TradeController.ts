@@ -69,12 +69,17 @@ class TradeController {
                                         let strategies = new StrategiesClass(+lastSavedPrice, +currentPrice, +moneyZeroAccount.available, +moneyOneAccount.available);
                                         //Apply start
                                         strategies.ApplyStrategieAndCreateOrder("strat1")
+
+                                        this.dataSaver.LogActionData();
+
                                         //Buy / Sell
                                         return this.dataSaver.PlaceOrder(strategies.orders[0])
                                             .then(ordered => {
 
                                                 //Order placed 
                                                 console.log(ordered);
+
+                                                
 
                                                 //TODO
 

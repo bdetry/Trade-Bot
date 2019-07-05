@@ -1,13 +1,23 @@
 "use strict";
-const DataSaverService = require("../Services/LocalDataService");
+const LocalDataService = require("../Services/LocalDataService");
 const CoinBaseProService = require("../Services/CoinBaseProService");
+const SpreadsheetService = require("../Services/SpreadsheetService");
 /**
  * Class build to save data
  * */
 class DataSaverClass {
     constructor() {
-        this.saverService = new DataSaverService();
+        this.saverService = new LocalDataService();
         this.coinBaseProService = new CoinBaseProService();
+        this.spreadsheetService = new SpreadsheetService();
+    }
+    LogActionData() {
+        try {
+            this.spreadsheetService.Init();
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
     /**
      * Place a purchase/sell order to coinbasepro
