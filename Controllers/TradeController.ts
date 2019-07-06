@@ -6,6 +6,7 @@ import StrategiesClass = require('./../Strategies/StrategiesClass');
 import { CoinBaseAccount } from '../Models/CoinBaseAccount';
 import DataSaverClass = require('../DataSaver/DataSaverClass');
 import { TradeLog } from '../Models/TradeLog';
+import { ErrorLog } from '../Models/ErrorLog';
 /**
  * Class that trade cryptos
  * */
@@ -71,45 +72,44 @@ class TradeController {
                                         //Apply start
                                         strategies.ApplyStrategieAndCreateOrder("strat1")
 
-
-                                        let log: TradeLog = {
-                                            date: Date.now.toString(),
-                                            id: "string",
-                                            price: 25165,
-                                            size: 25165,
-                                            sizeConvertedMoneyTwo: 25165,
-                                            side: "string",
-                                            moneyOneBalance: 25165,
-                                            moneyTwoPrice : 563,
-                                            moneyTwoBalance: 25165,
-                                            moneyOneBalanceCoverted: 25165,
-                                            totalBlances: 25165
-                                        };
-
-                                            this.dataSaver.LogActionData(log);
-
-                                        
-
                                         //Buy / Sell
-
-                                        /*
+                                        
                                         return this.dataSaver.PlaceOrder(strategies.orders[0])
                                             .then(ordered => {
 
-                                                //Order placed 
-                                                console.log(ordered);
+
+                                                //Log in sheets Results
+                                                try {
+                                                    let monerOneBlanceConv = strategies.ConvertToMoneyOne(+moneyOneAccount.available, +currentPrice);
+
+                                                    let log: TradeLog = {
+                                                        date: new Date(),
+                                                        id: ordered.data.id,
+                                                        price: +ordered.data.price,
+                                                        size: +ordered.data.size,
+                                                        sizeConvertedMoneyTwo: strategies.ConvertToMoneyOne(+ordered.data.size, +currentPrice),
+                                                        side: ordered.data.side,
+                                                        moneyOneBalance: +moneyZeroAccount.available,
+                                                        moneyTwoPrice: +currentPrice,
+                                                        moneyTwoBalance: +moneyOneAccount.available,
+                                                        moneyOneBalanceCoverted: monerOneBlanceConv,
+                                                        totalBlances: monerOneBlanceConv + +moneyZeroAccount.available
+                                                    };
+                                                    this.dataSaver.LogActionData(log);
+
+
+                                                }catch (e) {
+                                                    throw new Error(e);
+                                                }
 
                                                 
-
-                                                //TODO
-
-                                                // Log result 
-                                                // Save db
 
                                             }).catch(e => {
                                                 throw new Error(e);
                                             })  
-                                        */
+
+
+
                                     }).catch(e => {
                                         throw new Error(e);
                                     })
@@ -118,9 +118,18 @@ class TradeController {
                             })
                     }).catch(e => {
                         new Error(e);
-                        res.status(500).json({ stack : e.stack })
+
+                        let errLog: ErrorLog = {
+                            Date: new Date(),
+                            Error: e.stack
+                        }
+
+                        this.dataSaver.LogErrorData(errLog);
+
+                        res.status(500).json({ stack: e.stack })
                     });
-            } else {
+        } else {
+
                 res.status(401).json({ message: "Wrong key" })
             }
         

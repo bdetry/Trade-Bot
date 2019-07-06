@@ -35,6 +35,18 @@ app.listen(port, () => {
     let dataSaver = new DataSaverClass();
 
     try {
+
+        /*
+        dataGetter.GetAllCoinBaseProAccount().then(c => {
+            console.log(c)
+        }).catch(e => {
+
+            console.log(e)
+        });
+
+        */
+
+
         //First price pulls
         dataGetter.GetCurrencyPrice(GlobalString.MONEYSPAISKEY).then(res => {
             let currency = res.data as CoinBaseCurrency;

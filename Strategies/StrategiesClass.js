@@ -23,9 +23,9 @@ class StrategiesClass {
             if (this.currentMoneyTwoPrice - this.lastMoneTwoPrice > 0.0001) {
                 //vend
                 console.log("vend");
-                let toSellMoneyTwo = (15 * this.moneyTwoBalance) / 100;
+                let toSellMoneyTwo = (2 * this.moneyTwoBalance) / 100;
                 this.orders.push(order = {
-                    size: toSellMoneyTwo.toString(),
+                    size: Number.parseFloat(toSellMoneyTwo.toString()).toFixed(8).toString(),
                     price: this.currentMoneyTwoPrice.toString(),
                     side: "sell",
                     product_id: globals_1.GlobalString.MONEYSPAISKEY
@@ -35,9 +35,9 @@ class StrategiesClass {
             else if (this.currentMoneyTwoPrice - this.lastMoneTwoPrice < -0.0001) {
                 //achete
                 console.log("achete");
-                let toBuyMoneyTwo = (15 * this.moneyTwoBalance) / 100;
+                let toBuyMoneyTwo = (2 * this.moneyTwoBalance) / 100;
                 this.orders.push(order = {
-                    size: toBuyMoneyTwo.toString(),
+                    size: Number.parseFloat(toBuyMoneyTwo.toString()).toFixed(8).toString(),
                     price: this.currentMoneyTwoPrice.toString(),
                     side: "buy",
                     product_id: globals_1.GlobalString.MONEYSPAISKEY
@@ -45,7 +45,15 @@ class StrategiesClass {
                 return true;
             }
         }
-        throw new mongoose_1.Error("Could not apply start and pre make order");
+        throw new mongoose_1.Error("Could not apply strategie and pre make order");
+    }
+    /**
+     * Convert to euros in general
+     * @param money
+     * @param actualMoneyTwoPrice
+     */
+    ConvertToMoneyOne(money, actualMoneyTwoPrice) {
+        return money * actualMoneyTwoPrice;
     }
 }
 module.exports = StrategiesClass;

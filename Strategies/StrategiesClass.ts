@@ -44,11 +44,11 @@ class StrategiesClass {
                 //vend
                 console.log("vend");
 
-                let toSellMoneyTwo = (15 * this.moneyTwoBalance) / 100;
+                let toSellMoneyTwo = (2 * this.moneyTwoBalance) / 100;
 
                 this.orders.push(
                     order = {
-                        size: toSellMoneyTwo.toString(),
+                        size: Number.parseFloat(toSellMoneyTwo.toString()).toFixed(8).toString(),
                         price: this.currentMoneyTwoPrice.toString(),
                         side: "sell",
                         product_id: GlobalString.MONEYSPAISKEY
@@ -61,11 +61,11 @@ class StrategiesClass {
                 //achete
                 console.log("achete");
 
-                let toBuyMoneyTwo = (15 * this.moneyTwoBalance) / 100;
+                let toBuyMoneyTwo = (2 * this.moneyTwoBalance) / 100;
 
                 this.orders.push(
                     order = {
-                        size: toBuyMoneyTwo.toString(),
+                        size: Number.parseFloat(toBuyMoneyTwo.toString()).toFixed(8).toString(),
                         price: this.currentMoneyTwoPrice.toString(),
                         side: "buy",
                         product_id: GlobalString.MONEYSPAISKEY
@@ -79,6 +79,15 @@ class StrategiesClass {
 
         throw new Error("Could not apply strategie and pre make order")
 
+    }
+
+    /**
+     * Convert to euros in general
+     * @param money
+     * @param actualMoneyTwoPrice
+     */
+    public ConvertToMoneyOne(money: number, actualMoneyTwoPrice: number): number {
+        return money * actualMoneyTwoPrice
     }
 
 }

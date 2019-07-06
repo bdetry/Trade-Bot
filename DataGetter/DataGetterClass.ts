@@ -34,7 +34,11 @@ class DataGetterClass {
      * */
     public GetLocalAccounts(): mongoose.DocumentQuery<CoinBaseAccount[], CoinBaseAccount, {}> {
         return this.localStorage.GetLastAccountsInfo();
-    }          
+    }
+
+    public GetAllCoinBaseProAccount(): Promise<any> {
+        return this.GetFromCoinBase('/accounts');
+    }
 
     /**
      * Send get request to coinbase pro

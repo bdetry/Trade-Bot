@@ -37,7 +37,9 @@
     <Content Include="credentials.json">
       <SubType>Code</SubType>
     </Content>
-    <Content Include="token.json" />
+    <Content Include="token.json">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="tsconfig.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
@@ -55,7 +57,13 @@
     <TypeScriptCompile Include="Models\CoinBaseOrder.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Models\CoinBaseOrderResponse.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Models\CoinBaseTime.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Models\ErrorLog.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Models\GoogleSheetsCred.ts">

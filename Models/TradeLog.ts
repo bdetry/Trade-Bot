@@ -1,5 +1,5 @@
 ﻿export interface TradeLog {
-    date: string,
+    date: Date,
     id: string,
     price: number,
     size: number,

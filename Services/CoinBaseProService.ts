@@ -15,6 +15,7 @@
 import * as crypto from "crypto";
 import { GlobalString } from '../globals';
 import { CoinBaseOrder } from '../Models/CoinBaseOrder';
+import { CoinBaseOrderResponse } from '../Models/CoinBaseOrderResponse';
 
 class CoinBaseProService {
     /**
@@ -23,7 +24,7 @@ class CoinBaseProService {
      * @param config
      * @param method
      */
-    public Request(forPath: string, config: AxiosRequestConfig, method: string, body: CoinBaseOrder = undefined): AxiosPromise<object> {
+    public Request(forPath: string, config: AxiosRequestConfig, method: string, body: CoinBaseOrder = undefined): AxiosPromise<CoinBaseOrderResponse> {
 
         config.url = "https://api.pro.coinbase.com" + forPath;
         config.method = method as Method;

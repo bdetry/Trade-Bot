@@ -21,6 +21,9 @@ class DataGetterClass {
     GetLocalAccounts() {
         return this.localStorage.GetLastAccountsInfo();
     }
+    GetAllCoinBaseProAccount() {
+        return this.GetFromCoinBase('/accounts');
+    }
     /**
      * Send get request to coinbase pro
      * @param forPath route of request
