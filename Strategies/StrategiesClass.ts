@@ -47,13 +47,13 @@ class StrategiesClass {
                 //vend
                 console.log("vend");
 
-                let toSellMoneyTwo = (22 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100; // (22 * this.moneyTwoBalance) / 100; 
+                let toSellMoneyTwo =  (15 * this.moneyTwoBalance) / 100; 
 
                 this.orders.push(
                     order = {
                         size: Number.parseFloat(toSellMoneyTwo.toString()).toFixed(8).toString(),
-                        price: this.currentMoneyTwoPrice.toString(),
-                        side: "buy", //sell
+                        price: this.currentMoneyTwoPriceSell.toString(),
+                        side: "sell", //sell
                         product_id: GlobalString.MONEYSPAISKEY
                     });
 
@@ -64,7 +64,7 @@ class StrategiesClass {
                 //achete
                 console.log("achete");
 
-                let toBuyMoneyTwo = (22 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100;
+                let toBuyMoneyTwo = (15 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100;
 
                 this.orders.push(
                     order = {

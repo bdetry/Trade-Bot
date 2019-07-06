@@ -6,6 +6,8 @@ import DataGetterClass = require('./DataGetter/DataGetterClass');
 import DataSaverClass = require('./DataSaver/DataSaverClass');
 import * as mongoose from 'mongoose';
 import InitService = require('./Services/InitService');
+import * as schedule from 'node-schedule';
+import TradeController = require('./Controllers/TradeController');
 
 
 var app = express();
@@ -31,10 +33,22 @@ app.listen(port, () => {
 
     let dataGetter = new DataGetterClass();
     let dataSaver = new DataSaverClass();
+    let tradeController = new TradeController();
 
     let startService = new InitService(dataSaver, dataGetter);
     startService.LoadBasicInformation();
 
+    let nextRun: Date = new Date()
+
+    let nextTriggerTime = (1000 * 60 * 60);
+
+    nextRun.setDate(nextRun.getTime() + nextTriggerTime);
+
+    let _ = schedule.scheduleJob(nextRun, function () {
+        console.log('Time trigger');
+        nextRun.setDate(nextRun.getTime() + nextTriggerTime);
+        tradeController.DoTrade();
+    });
 
 
 });
