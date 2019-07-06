@@ -49,7 +49,5 @@ app.listen(port, () => {
         nextRun.setDate(nextRun.getTime() + nextTriggerTime);
         tradeController.DoTrade();
     });
-
-
 });
 
