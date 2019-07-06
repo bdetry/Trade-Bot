@@ -5,7 +5,7 @@ const routes = require("./routes");
 const DataGetterClass = require("./DataGetter/DataGetterClass");
 const DataSaverClass = require("./DataSaver/DataSaverClass");
 const mongoose = require("mongoose");
-const globals_1 = require("./globals");
+const InitService = require("./Services/InitService");
 var app = express();
 mongoose.connect('mongodb://localhost:27017/tradeBot');
 let db = mongoose.connection;
@@ -23,43 +23,7 @@ app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`);
     let dataGetter = new DataGetterClass();
     let dataSaver = new DataSaverClass();
-    try {
-        /*
-        dataGetter.GetAllCoinBaseProAccount().then(c => {
-            console.log(c)
-        }).catch(e => {
-
-            console.log(e)
-        });
-
-        */
-        //First price pulls
-        dataGetter.GetCurrencyPrice(globals_1.GlobalString.MONEYSPAISKEY).then(res => {
-            let currency = res.data;
-            //Save data localy      
-            return dataSaver.SaveCurrency(currency)
-                .then(res => console.log("Currency info saved to database"))
-                .catch(err => { throw new Error(err); });
-        }).catch(err => { throw new Error("Getting currency price"); });
-        //First account info pulls
-        dataGetter.GetAccount(globals_1.GlobalString.CBLTCACCOINTID).then(res => {
-            let account = res.data;
-            //Save data localy
-            return dataSaver.SaveAccount(account)
-                .then(res => console.log("Account info saved to database"))
-                .catch(err => { throw new Error(err); });
-        }).catch(err => { throw new Error(err); });
-        //First account info pulls
-        dataGetter.GetAccount(globals_1.GlobalString.CBEURACCOUNTID).then(res => {
-            let account = res.data;
-            //Save data localy
-            return dataSaver.SaveAccount(account)
-                .then(res => console.log("Account info saved to database"))
-                .catch(err => { throw new Error(err); });
-        }).catch(err => { throw new Error(err); });
-    }
-    catch (e) {
-        console.log(e);
-    }
+    let startService = new InitService(dataSaver, dataGetter);
+    startService.LoadBasicInformation();
 });
 //# sourceMappingURL=app.js.map

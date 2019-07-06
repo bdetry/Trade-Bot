@@ -11,6 +11,8 @@ class StrategiesClass {
     private lastMoneTwoPrice: number
     //live price
     private currentMoneyTwoPrice: number
+    //live sell price
+    private currentMoneyTwoPriceSell: number
 
     //last monye one balance
     private moneyOneBalance: number
@@ -21,11 +23,12 @@ class StrategiesClass {
 
 
 
-    constructor(last: number, currentPrice: number, moneyZero: number, moneyOne: number) {
+    constructor(last: number, currentPrice: number, moneyZero: number, moneyOne: number, currentMoneyTwoPriceSell : number) {
         this.lastMoneTwoPrice = last;
         this.currentMoneyTwoPrice = currentPrice;
         this.moneyOneBalance = moneyZero;
         this.moneyTwoBalance = moneyOne;
+        this.currentMoneyTwoPriceSell = currentMoneyTwoPriceSell
     }
 
 
@@ -44,13 +47,13 @@ class StrategiesClass {
                 //vend
                 console.log("vend");
 
-                let toSellMoneyTwo = (2 * this.moneyTwoBalance) / 100;
+                let toSellMoneyTwo = (22 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100; // (22 * this.moneyTwoBalance) / 100; 
 
                 this.orders.push(
                     order = {
                         size: Number.parseFloat(toSellMoneyTwo.toString()).toFixed(8).toString(),
                         price: this.currentMoneyTwoPrice.toString(),
-                        side: "sell",
+                        side: "buy", //sell
                         product_id: GlobalString.MONEYSPAISKEY
                     });
 
@@ -61,13 +64,13 @@ class StrategiesClass {
                 //achete
                 console.log("achete");
 
-                let toBuyMoneyTwo = (2 * this.moneyTwoBalance) / 100;
+                let toBuyMoneyTwo = (22 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100;
 
                 this.orders.push(
                     order = {
                         size: Number.parseFloat(toBuyMoneyTwo.toString()).toFixed(8).toString(),
                         price: this.currentMoneyTwoPrice.toString(),
-                        side: "buy",
+                        side: "buy", //buy
                         product_id: GlobalString.MONEYSPAISKEY
                     });
 
@@ -88,6 +91,16 @@ class StrategiesClass {
      */
     public ConvertToMoneyOne(money: number, actualMoneyTwoPrice: number): number {
         return money * actualMoneyTwoPrice
+    }
+
+
+    /**
+     * Convert to euros in general
+     * @param money
+     * @param actualMoneyOnePrice
+     */
+    public ConvertToMoneyTwo(money: number, actualMoneyOnePrice: number): number {
+        return money / actualMoneyOnePrice
     }
 
 }

@@ -5,12 +5,13 @@ const globals_1 = require("../globals");
  * Class qui definit les actions a executer
  * */
 class StrategiesClass {
-    constructor(last, currentPrice, moneyZero, moneyOne) {
+    constructor(last, currentPrice, moneyZero, moneyOne, currentMoneyTwoPriceSell) {
         this.orders = new Array();
         this.lastMoneTwoPrice = last;
         this.currentMoneyTwoPrice = currentPrice;
         this.moneyOneBalance = moneyZero;
         this.moneyTwoBalance = moneyOne;
+        this.currentMoneyTwoPriceSell = currentMoneyTwoPriceSell;
     }
     /**
      * Apply selected and pre make the order
@@ -23,11 +24,11 @@ class StrategiesClass {
             if (this.currentMoneyTwoPrice - this.lastMoneTwoPrice > 0.0001) {
                 //vend
                 console.log("vend");
-                let toSellMoneyTwo = (2 * this.moneyTwoBalance) / 100;
+                let toSellMoneyTwo = (22 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100; // (22 * this.moneyTwoBalance) / 100; 
                 this.orders.push(order = {
                     size: Number.parseFloat(toSellMoneyTwo.toString()).toFixed(8).toString(),
                     price: this.currentMoneyTwoPrice.toString(),
-                    side: "sell",
+                    side: "buy",
                     product_id: globals_1.GlobalString.MONEYSPAISKEY
                 });
                 return true;
@@ -35,7 +36,7 @@ class StrategiesClass {
             else if (this.currentMoneyTwoPrice - this.lastMoneTwoPrice < -0.0001) {
                 //achete
                 console.log("achete");
-                let toBuyMoneyTwo = (2 * this.moneyTwoBalance) / 100;
+                let toBuyMoneyTwo = (22 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100;
                 this.orders.push(order = {
                     size: Number.parseFloat(toBuyMoneyTwo.toString()).toFixed(8).toString(),
                     price: this.currentMoneyTwoPrice.toString(),
@@ -54,6 +55,14 @@ class StrategiesClass {
      */
     ConvertToMoneyOne(money, actualMoneyTwoPrice) {
         return money * actualMoneyTwoPrice;
+    }
+    /**
+     * Convert to euros in general
+     * @param money
+     * @param actualMoneyOnePrice
+     */
+    ConvertToMoneyTwo(money, actualMoneyOnePrice) {
+        return money / actualMoneyOnePrice;
     }
 }
 module.exports = StrategiesClass;

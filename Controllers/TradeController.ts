@@ -7,6 +7,7 @@ import { CoinBaseAccount } from '../Models/CoinBaseAccount';
 import DataSaverClass = require('../DataSaver/DataSaverClass');
 import { TradeLog } from '../Models/TradeLog';
 import { ErrorLog } from '../Models/ErrorLog';
+import InitService = require('../Services/InitService');
 /**
  * Class that trade cryptos
  * */
@@ -66,9 +67,10 @@ class TradeController {
                                     .then(x => {
                                         //current price
                                         let currentPrice = x.data.asks[0][0];
+                                        let currentSellPrice = x.data.bids[0][0];;
 
                                         //Choise maker
-                                        let strategies = new StrategiesClass(+lastSavedPrice, +currentPrice, +moneyZeroAccount.available, +moneyOneAccount.available);
+                                        let strategies = new StrategiesClass(+lastSavedPrice, +currentPrice, +moneyZeroAccount.available, +moneyOneAccount.available, currentSellPrice);
                                         //Apply start
                                         strategies.ApplyStrategieAndCreateOrder("strat1")
 
@@ -82,28 +84,38 @@ class TradeController {
                                                 try {
                                                     let monerOneBlanceConv = strategies.ConvertToMoneyOne(+moneyOneAccount.available, +currentPrice);
 
+                                                    let tradePrice = ordered.data.side == "buy" ? +currentPrice : currentSellPrice;
+
+                                                    let sizeConverted = strategies.ConvertToMoneyOne(+ordered.data.size, +tradePrice);
+
+                                                    let moneyOneBalance = ordered.data.side == "buy" ? +moneyZeroAccount.available - sizeConverted : +moneyZeroAccount.available + sizeConverted;
+                                                    let moneyTwoBalance = ordered.data.side == "buy" ? +moneyOneAccount.available + +ordered.data.size : +moneyOneAccount.available - +ordered.data.size;
+
                                                     let log: TradeLog = {
                                                         date: new Date(),
                                                         id: ordered.data.id,
                                                         price: +ordered.data.price,
                                                         size: +ordered.data.size,
-                                                        sizeConvertedMoneyTwo: strategies.ConvertToMoneyOne(+ordered.data.size, +currentPrice),
+                                                        sizeConvertedMoneyTwo: sizeConverted,
                                                         side: ordered.data.side,
-                                                        moneyOneBalance: +moneyZeroAccount.available,
+                                                        moneyOneBalance: moneyOneBalance,
                                                         moneyTwoPrice: +currentPrice,
-                                                        moneyTwoBalance: +moneyOneAccount.available,
+                                                        moneyTwoBalance: moneyTwoBalance,
                                                         moneyOneBalanceCoverted: monerOneBlanceConv,
                                                         totalBlances: monerOneBlanceConv + +moneyZeroAccount.available
                                                     };
-                                                    this.dataSaver.LogActionData(log);
 
+                                                    this.dataSaver.LogActionData(log);
+                                                    
+                                                    let startService = new InitService(this.dataSaver, this.dataGetter);
+                                                    startService.LoadBasicInformation();
+
+                                                    res.status(200).json({ action: ordered.data.side });
+                                                    
 
                                                 }catch (e) {
                                                     throw new Error(e);
                                                 }
-
-                                                
-
                                             }).catch(e => {
                                                 throw new Error(e);
                                             })  
