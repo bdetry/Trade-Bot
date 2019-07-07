@@ -25,7 +25,7 @@
     <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
     <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
     <EnableTypeScript>true</EnableTypeScript>
-    <StartWebBrowser>True</StartWebBrowser>
+    <StartWebBrowser>False</StartWebBrowser>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,6 +72,9 @@
     </TypeScriptCompile>
     <TypeScriptCompile Include="Models\Schemas\CoinBaseAccountSchema.ts" />
     <TypeScriptCompile Include="Models\Schemas\CoinBaseCurrencySchema.ts" />
+    <TypeScriptCompile Include="Models\CoinBaseOrder.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Models\TradeLog.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
