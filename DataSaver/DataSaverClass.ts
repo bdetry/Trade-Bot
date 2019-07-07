@@ -35,7 +35,7 @@ class DataSaverClass {
         this.spreadsheetService.Init(false).then(x => {
 
            return this.spreadsheetService.Write(x, trade , 'Sheet1').then(resp => {
-                console.log(resp);
+               resp = resp;
            }).catch(err => {
                throw new Error('Could not write to spreadsheet : ' + err);
             });;
@@ -47,7 +47,7 @@ class DataSaverClass {
         this.spreadsheetService.Init(true).then(x => {
 
             return this.spreadsheetService.Write(x, log, 'Sheet2').then(resp => {
-                console.log(resp);
+                resp = resp;
             }).catch(err => {
                 throw new Error('Could not write err to spreadsheet : ' + err);
             });;
