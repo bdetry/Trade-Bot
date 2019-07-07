@@ -40,7 +40,7 @@ app.listen(port, () => {
 
     let nextRun: Date = new Date()
 
-    let nextTriggerTime = (1000 * 60);
+    let nextTriggerTime = (1000 * 60 * 60 );
 
     nextRun.setDate(nextRun.getTime() + nextTriggerTime);
 
