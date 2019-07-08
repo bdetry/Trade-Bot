@@ -7,7 +7,6 @@
     side: string,
     moneyOneBalance: number,
     moneyTwoBalance: number,
-    moneyOneBalanceCoverted: number,
-    moneyTwoPrice: number,
+    moneyTwoBalanceCoverted: number,
     totalBlances: number
 }

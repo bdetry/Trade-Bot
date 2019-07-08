@@ -37,17 +37,10 @@ app.listen(port, () => {
 
     let startService = new InitService(dataSaver, dataGetter);
     startService.LoadBasicInformation();
-
-    let nextRun: Date = new Date()
-
-    let nextTriggerTime = ( 1000 * 60  );
-
-    nextRun.setDate(nextRun.getTime() + nextTriggerTime);
-
-    let seduler = schedule.scheduleJob(nextRun, function (date) {
+   
+    let seduler = schedule.scheduleJob("26 * * * *", function (date) {
         console.log('Time trigger. Next :' + date.toDateString());
-        //nextRun.setDate(nextRun.getTime() + nextTriggerTime);
-        //tradeController.DoTrade();
+        tradeController.DoTrade();
     });
 });
 

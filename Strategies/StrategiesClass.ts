@@ -43,11 +43,11 @@ class StrategiesClass {
 
         if (name == "strat1") {
 
-            if (this.currentMoneyTwoPrice - this.lastMoneTwoPrice > 0.0001) {
+           if (this.currentMoneyTwoPrice - this.lastMoneTwoPrice > +GlobalString.MINVARIATIONFORTRADE) {
                 //vend
                 console.log("vend");
 
-                let toSellMoneyTwo =  (18 * this.moneyTwoBalance) / 100; 
+                let toSellMoneyTwo =  (14 * this.moneyTwoBalance) / 100; 
 
                 this.orders.push(
                     order = {
@@ -57,14 +57,18 @@ class StrategiesClass {
                         product_id: GlobalString.MONEYSPAISKEY
                     });
 
+               if (+order.size < +GlobalString.MINTRADESIZE) {
+                   throw new Error("Amount too small");
+               }
+
 
                 return true;
 
-            } else if (this.currentMoneyTwoPrice - this.lastMoneTwoPrice < -0.0001) {
+            } else if (this.currentMoneyTwoPrice - this.lastMoneTwoPrice < - +GlobalString.MINVARIATIONFORTRADE) {
                 //achete
                 console.log("achete");
 
-                let toBuyMoneyTwo = (18 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100;
+                let toBuyMoneyTwo = (14 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100;
 
                 this.orders.push(
                     order = {
@@ -73,6 +77,12 @@ class StrategiesClass {
                         side: "buy", //buy
                         product_id: GlobalString.MONEYSPAISKEY
                     });
+
+
+
+               if (+order.size < +GlobalString.MINTRADESIZE) {
+                   throw new Error("Amount too small");
+               }
 
                 return true;
 
