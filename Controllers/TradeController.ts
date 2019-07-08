@@ -190,6 +190,11 @@ class TradeController {
 
                                 let order = strategies.orders[0];
 
+
+
+
+
+
                                 
 
                                 //Buy / Sell
@@ -199,9 +204,8 @@ class TradeController {
 
 
                                         //Log in sheets Results
-                                    try {
+                                        try {
 
-                                            let monerTwoBlanceConv = strategies.ConvertToMoneyOne(+moneyOneAccount.available, +currentPrice);
 
                                             let tradePrice = order.side == "buy" ? +currentPrice : currentSellPrice;
 
@@ -210,9 +214,12 @@ class TradeController {
                                             let moneyOneBalance = order.side == "buy" ? +moneyZeroAccount.available - sizeConverted : +moneyZeroAccount.available + sizeConverted;
                                             let moneyTwoBalance = order.side == "buy" ? +moneyOneAccount.available + +order.size : +moneyOneAccount.available - +order.size;
 
+
+                                            let monerTwoBlanceConv = strategies.ConvertToMoneyOne(moneyTwoBalance, +currentPrice);
+
                                             let log: TradeLog = {
                                                 date: new Date(),
-                                                id: "asdasdasdasdasd",
+                                                id: ordered.data.id,
                                                 price: +order.price,
                                                 size: +order.size,
                                                 sizeConvertedMoneyTwo: sizeConverted,
@@ -234,9 +241,12 @@ class TradeController {
                                             throw new Error(e);
                                         }
 
+
                                     }).catch(e => {
                                         throw new Error(e);
                                     })
+
+                                
 
 
                                 
