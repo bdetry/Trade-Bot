@@ -48,7 +48,9 @@ class InitService{
                     //Save data localy
                     return this.dataSaver.SaveAccount(account)
                         .then(res => console.log("Account info saved to database"))
-                        .catch(err => { throw new Error(err); });
+                        .catch(err => {
+                            throw new Error(err);
+                        });
                 }).catch(err => {
 
                     throw new Error(err);
@@ -60,7 +62,9 @@ class InitService{
                         //Save data localy
                         return this.dataSaver.SaveAccount(account)
                             .then(res => console.log("Account info saved to database"))
-                            .catch(err => { throw new Error(err); });
+                            .catch(err => {
+                                throw new Error(err);
+                            });
 
                 });
             });

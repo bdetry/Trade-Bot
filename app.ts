@@ -40,14 +40,14 @@ app.listen(port, () => {
 
     let nextRun: Date = new Date()
 
-    let nextTriggerTime = (1000 * 60 * 60 );
+    let nextTriggerTime = ( 1000 * 60  );
 
     nextRun.setDate(nextRun.getTime() + nextTriggerTime);
 
     let seduler = schedule.scheduleJob(nextRun, function (date) {
         console.log('Time trigger. Next :' + date.toDateString());
-        nextRun.setDate(nextRun.getTime() + nextTriggerTime);
-        tradeController.DoTrade();
+        //nextRun.setDate(nextRun.getTime() + nextTriggerTime);
+        //tradeController.DoTrade();
     });
 });
 
