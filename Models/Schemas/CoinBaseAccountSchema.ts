@@ -9,5 +9,5 @@ export const CoinBaseAccountSchema = new mongoose.Schema({
     available: { type: String, required: true },
     hold: { type: String, required: true },
     profile_id: { type: String, required: true },
-    date: { type: String, default: Date.now() / 1000 },
+    date: { type: Date, default: new Date() }
 });

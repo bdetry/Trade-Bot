@@ -15,7 +15,7 @@ import { CoinBaseAccount } from '../Models/CoinBaseAccount';
     */
     public GetLastCurrencyInfo(): mongoose.DocumentQuery < CoinBaseCurrency[], CoinBaseCurrency, {} > {
         const Currency = mongoose.model<CoinBaseCurrency>('CoinBaseCurrency', CoinBaseCurrencySchema);
-        return Currency.find().sort({ date: -1 }).limit(1);
+        return Currency.find().sort({ date: 'desc' }).limit(1);
     }
 
         /**
@@ -23,7 +23,7 @@ import { CoinBaseAccount } from '../Models/CoinBaseAccount';
      * */
         public GetLastAccountsInfo(): mongoose.DocumentQuery < CoinBaseAccount[], CoinBaseAccount, {} > {
         const Account = mongoose.model<CoinBaseAccount>('CoinBaseAccount', CoinBaseAccountSchema);
-        return Account.find().sort({ date: -1 }).limit(2);
+            return Account.find().sort({ date: 'desc' }).limit(2);
     }
 
         /**

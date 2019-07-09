@@ -7,5 +7,5 @@ export interface CoinBaseAccount extends Document {
     available: string,
     hold: string,
     profile_id: string,
-    time : string
+    date: Date;
 }

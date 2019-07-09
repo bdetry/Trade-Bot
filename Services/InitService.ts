@@ -36,18 +36,25 @@ class InitService{
             //First price pulls
             this.dataGetter.GetCurrencyPrice(GlobalString.MONEYSPAISKEY).then(res => {
                 let currency = res.data as CoinBaseCurrency;
+
+                currency.date = new Date()
+
                 //Save data localy      
                 return this.dataSaver.SaveCurrency(currency)
                     .then(res => console.log("Currency info saved to database"))
                     .catch(err => { throw new Error(err); });
-            }).catch(err => { throw new Error("Getting currency price"); }).then(() => {
+            }).catch(err => { throw new Error("Getting currency price" + err); }).then(() => {
 
                 //First account info pulls
                 return this.dataGetter.GetAccount(GlobalString.CBLTCACCOINTID).then(res => {
                     let account = res.data as CoinBaseAccount;
+                    account.date = new Date()
+                    
                     //Save data localy
                     return this.dataSaver.SaveAccount(account)
-                        .then(res => console.log("Account info saved to database"))
+                        .then(res => {
+                            console.log("Account info saved to database")
+                        })
                         .catch(err => {
                             throw new Error(err);
                         });
@@ -58,7 +65,9 @@ class InitService{
 
                     //First account info pulls
                    return this.dataGetter.GetAccount(GlobalString.CBEURACCOUNTID).then(res => {
-                        let account = res.data as CoinBaseAccount;
+                       let account = res.data as CoinBaseAccount;
+                       account.date = new Date()
+
                         //Save data localy
                         return this.dataSaver.SaveAccount(account)
                             .then(res => console.log("Account info saved to database"))
