@@ -8,5 +8,6 @@
     moneyOneBalance: number,
     moneyTwoBalance: number,
     moneyTwoBalanceCoverted: number,
-    totalBlances: number
+    totalBlances: number,
+    currentAskPrice: number
 }
