@@ -190,53 +190,51 @@ class TradeController {
                                 strategies.ApplyStrategieAndCreateOrder("strat1");
                                 let order = strategies.orders[0];
 
-
-
-                                //Log in sheets Results
-                                try {
-
-                                    let tradePrice = order.side == "buy" ? +currentPrice : currentSellPrice;
-
-                                    let sizeConverted = strategies.ConvertToMoneyOne(+order.size, +tradePrice);
-
-                                    let moneyOneBalance = order.side == "buy" ? +moneyZeroAccount.available - sizeConverted : +moneyZeroAccount.available + sizeConverted;
-                                    let moneyTwoBalance = order.side == "buy" ? +moneyOneAccount.available + +order.size : +moneyOneAccount.available - +order.size;
-
-                                    let monerTwoBlanceConv = strategies.ConvertToMoneyOne(moneyTwoBalance, +tradePrice);
-
-                                    let log: TradeLog = {
-                                        date: new Date(),
-                                        id: "asdasdas",
-                                        price: +order.price,
-                                        size: +order.size,
-                                        sizeConvertedMoneyTwo: sizeConverted,
-                                        side: order.side,
-                                        moneyOneBalance: moneyOneBalance,
-                                        moneyTwoBalance: moneyTwoBalance,
-                                        moneyTwoBalanceCoverted: monerTwoBlanceConv,
-                                        totalBlances: monerTwoBlanceConv + +moneyZeroAccount.available,
-                                        currentAskPrice: +currentPrice
-                                    };
-
-                                    this.dataSaver.LogActionData(log);
-
-                                    let startService = new InitService(this.dataSaver, this.dataGetter);
-                                    startService.LoadBasicInformation();
-
-                                } catch (e) {
-                                    throw new Error(e);
-                                } 
-
-                                /*
+                                
                                 //Buy / Sell
                                 return this.dataSaver.PlaceOrder(order)
                                     .then(ordered => {
-                                        
+
+                                        //Log in sheets Results
+                                        try {
+
+                                            let tradePrice = order.side == "buy" ? +currentPrice : currentSellPrice;
+
+                                            let sizeConverted = strategies.ConvertToMoneyOne(+order.size, +tradePrice);
+
+                                            let moneyOneBalance = order.side == "buy" ? +moneyZeroAccount.available - sizeConverted : +moneyZeroAccount.available + sizeConverted;
+                                            let moneyTwoBalance = order.side == "buy" ? +moneyOneAccount.available + +order.size : +moneyOneAccount.available - +order.size;
+
+
+                                            let monerTwoBlanceConv = strategies.ConvertToMoneyOne(moneyTwoBalance, +tradePrice);
+
+                                            let log: TradeLog = {
+                                                date: new Date(),
+                                                id: ordered.data.id,
+                                                price: +order.price,
+                                                size: +order.size,
+                                                sizeConvertedMoneyTwo: sizeConverted,
+                                                side: order.side,
+                                                moneyOneBalance: moneyOneBalance,
+                                                moneyTwoBalance: moneyTwoBalance,
+                                                moneyTwoBalanceCoverted: monerTwoBlanceConv,
+                                                totalBlances: monerTwoBlanceConv + moneyOneBalance,
+                                                currentAskPrice: +currentPrice
+                                            };
+
+                                            this.dataSaver.LogActionData(log);
+
+                                            let startService = new InitService(this.dataSaver, this.dataGetter);
+                                            startService.LoadBasicInformation();
+
+                                        } catch (e) {
+                                            throw new Error(e);
+                                        } 
                                                 
 
                                     }).catch(e => {
                                         throw new Error(e);
-                                    })*/
+                                    })
 
                             }).catch(e => {
                                 throw new Error(e);
