@@ -10,6 +10,8 @@ class InitService{
     private dataSaver: DataSaverClass;
     private dataGetter: DataGetterClass;
 
+    private retry: number;
+
     constructor(dataSaver: DataSaverClass, dataGetter: DataGetterClass) {
         this.dataGetter = dataGetter;
         this.dataSaver = dataSaver;
@@ -86,6 +88,12 @@ class InitService{
                 }
 
                 this.dataSaver.LogErrorData(errLog);
+
+                this.retry = this.retry + 1;
+
+                if (this.retry < 5) {
+                    this.LoadBasicInformation();
+                }
 
 
             });
