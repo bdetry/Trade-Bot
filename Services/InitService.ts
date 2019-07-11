@@ -10,7 +10,7 @@ class InitService{
     private dataSaver: DataSaverClass;
     private dataGetter: DataGetterClass;
 
-    private retry: number;
+    private retry: number = 0;
 
     constructor(dataSaver: DataSaverClass, dataGetter: DataGetterClass) {
         this.dataGetter = dataGetter;
