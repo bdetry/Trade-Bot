@@ -8,7 +8,7 @@ export enum GlobalString {
     MONEYTWOKEY = "BTC",
     MONEYSPAISKEY = "BTC-EUR",
     TRADESECURITYKEY = '2s58e2fa2e582a2',
-    SPREADSHEETID = "1NnBQ-OpYjPTeOuTuXZhgLko8uSafuWqeCIHbblDTuWk",
+    SPREADSHEETID = "1gd8gYGli0uow7HxodLPJYVukTmD17Pv_2dcekRpTIGo",
     MINTRADESIZE = "0.001",
     MINVARIATIONFORTRADE = "0.0001",
 }

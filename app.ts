@@ -38,7 +38,7 @@ app.listen(port, () => {
     let startService = new InitService(dataSaver, dataGetter);
     startService.LoadBasicInformation();
    
-    let seduler = schedule.scheduleJob("26 * * * *", function (date) {
+    let seduler = schedule.scheduleJob("0 */6 * * *", function (date) {
         console.log('Time trigger. Next :' + date.toDateString());
         tradeController.DoTrade();
     });

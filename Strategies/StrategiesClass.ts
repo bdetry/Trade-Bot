@@ -47,7 +47,7 @@ class StrategiesClass {
                 //vend
                 console.log("vend");
 
-                let toSellMoneyTwo =  (19 * this.moneyTwoBalance) / 100; 
+                let toSellMoneyTwo =  (22 * this.moneyTwoBalance) / 100; 
 
                 this.orders.push(
                     order = {
@@ -68,7 +68,7 @@ class StrategiesClass {
                 //achete
                 console.log("achete");
 
-                let toBuyMoneyTwo = (19 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100;
+                let toBuyMoneyTwo = (22 * this.ConvertToMoneyTwo(this.moneyOneBalance, this.currentMoneyTwoPrice)) / 100;
 
                 this.orders.push(
                     order = {
